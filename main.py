@@ -1,4 +1,4 @@
-import sys
+import sys, time
 
 import paho.mqtt.client as mqtt
 
@@ -16,7 +16,12 @@ def on_disconnect(client, userdata, rc):
 
 def on_message(client, userdata, msg):
     print("[MQTT] Received message from topic " + msg.topic)
-    print("[MQTT]     Payload: " + str(msg.payload))
+    t_startTime = time.time_ns()
+    time.sleep(0.1)
+    t_endTime = time.time_ns()
+    t_totalTime = t_endTime - t_startTime
+    print("[TIME] Finished in " + str(t_totalTime/1e9) + " s")
+
 
 def main():
     client = mqtt.Client()
