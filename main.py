@@ -103,16 +103,19 @@ def main(cfg):
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect
     client.on_message = on_message
-    client.connect(_host, _port, 60)
+
+    try:
+        client.connect(_host, _port, 60)
+    except Exception as e:
+        print(e)
+        main(cfg)
+
     client.loop_forever()
 
 # Main Call
 if __name__ == "__main__":
     try:
         cfg = Config('config.ini')
-        try:
-            main(cfg)
-        except KeyboardInterrupt:
-            sys.exit(0)
+        main(cfg)
     except Exception as e:
-        raise e
+        print(e)
